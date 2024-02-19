@@ -3,6 +3,9 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static org.example.StatusOfOrder.DELIVERY;
+import static org.example.StatusOfOrder.PAID;
+
 public class Orders {
     private static int numberOfOrders;
     private static int orderIdCurrent;
@@ -90,47 +93,36 @@ public class Orders {
 
     public static void ProcessingOrder (int orderId){
         Orders order = FindOrder(orderId);
+        StatusOfOrder statusOfOrder;
+        statusOfOrder = DELIVERY;
         int paidLimit = 10000;
-        int assemblyLimit = 10000;
-        int deliveryLimit = 5000;
+        int assemblyLimit = 15000;
+        int deliveryLimit = 10000;
+        int readyLimit = 4000;
 
 
 
         long delta =  System.currentTimeMillis() - order.orderDate;
+        System.out.println("delta = " + delta);
+        System.out.println(statusOfOrder.toString());
+
         if (delta < paidLimit) {
-            order.orderStatus = StatusOfOrder.PAID.toString();
-            System.out.println("Заказ № " + orderId + "в статусе " + order.orderStatus);
+            order.orderStatus = PAID.toString();
+            System.out.println("Заказ № " + orderId + " в статусе " + order.orderStatus);
         }
 
-        if (delta < 10000) {
-            order.orderStatus = StatusOfOrder.PAID.toString();
-            System.out.println("Заказ № " + orderId + "в статусе " + order.orderStatus);
+        if (delta < paidLimit + assemblyLimit && delta > paidLimit) {
+            order.orderStatus = StatusOfOrder.ASSEMBLY.toString();
+            System.out.println("Заказ № " + orderId + " в статусе " + order.orderStatus);
         }
-        if (delta < 10000) {
-            order.orderStatus = StatusOfOrder.PAID.toString();
-            System.out.println("Заказ № " + orderId + "в статусе " + order.orderStatus);
+        if (delta > paidLimit + assemblyLimit && delta < paidLimit + assemblyLimit + deliveryLimit) {
+            order.orderStatus = StatusOfOrder.DELIVERY.toString();
+            System.out.println("Заказ № " + orderId + " в статусе " + order.orderStatus);
         }
 
-
-
-        switch ((int) (System.currentTimeMillis() - order.orderDate)){
-            case (10000):
-                order.orderStatus = StatusOfOrder.PAID.toString();
-                System.out.println("Заказ № " + orderId + "в статусе " + order.orderStatus);
-                break;
-            case (20000):
-                order.orderStatus = StatusOfOrder.ASSEMBLY.toString();
-                System.out.println("Заказ № " + orderId + "в статусе " + order.orderStatus);
-                break;
-            case (45000):
-                order.orderStatus = StatusOfOrder.DELIVERY.toString();
-                System.out.println("Заказ № " + orderId + "в статусе " + order.orderStatus);
-                break;
-            case (60000):
-                order.orderStatus = StatusOfOrder.READY.toString();
-                System.out.println("Заказ № " + orderId + "в статусе " + order.orderStatus);
-                break;
-
+        if (delta > paidLimit + assemblyLimit + deliveryLimit && delta < paidLimit + assemblyLimit + deliveryLimit + readyLimit ) {
+            order.orderStatus = StatusOfOrder.READY.toString();
+            System.out.println("Заказ № " + orderId + " в статусе " + order.orderStatus);
         }
     }
 
