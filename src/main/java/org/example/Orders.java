@@ -23,6 +23,7 @@ public class Orders {
         Orders order = new Orders();
         order.orderId = orderIdCurrent;
         orderIdCurrent++;
+        numberOfOrders ++;
         order.clientId = clientId;
         order.orderDate = System.currentTimeMillis();
         order.orderStatus = "Заказ размещен";
@@ -129,6 +130,8 @@ public class Orders {
         System.out.println("Заказ " + orderId + " не найден");
         return null;
     }
+
+    public static void RemoveOrder (int orderId){}
 
 
 }
