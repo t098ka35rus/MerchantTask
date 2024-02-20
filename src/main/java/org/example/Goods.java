@@ -3,18 +3,15 @@ package org.example;
 import java.util.ArrayList;
 
 public class Goods {
+    private static final ArrayList<Goods> goodsArrayList = new ArrayList<>();
     private static int numberOfgoods;
     private static int goodsIdCurrent;
     private int goodsId;
     private int goodsPrice;
-
     private int ordered;
     private String goodsName;
-
     private String vendor;
     private boolean forsale;
-
-    private static final ArrayList<Goods> goodsArrayList = new ArrayList<>();
 
 
     private Goods() {
@@ -24,11 +21,7 @@ public class Goods {
         return numberOfgoods;
     }
 
-    public String getVendor() {
-        return vendor;
-    }
-
-    public static void SoldOff (int goodsId) {
+    public static void SoldOff(int goodsId) {
         for (Goods goods : goodsArrayList) {
             if (goods.goodsId == goodsId) {
                 goods.forsale = false;
@@ -36,7 +29,7 @@ public class Goods {
         }
     }
 
-    public static void AddGood (String name, int price, String vendor) {
+    public static void AddGood(String name, int price, String vendor) {
         Goods goods = new Goods();
         goods.forsale = true;
         goods.goodsName = name;
@@ -44,20 +37,20 @@ public class Goods {
         goods.vendor = vendor;
         numberOfgoods++;
         goods.goodsId = goodsIdCurrent;
-        goodsIdCurrent ++;
+        goodsIdCurrent++;
         goodsArrayList.add(goods);
     }
 
-    public static void RemoveGood (int goodsId) {
+    public static void RemoveGood(int goodsId) {
         for (int i = 0; i < goodsArrayList.size(); i++) {
-            if (goodsArrayList.get(i).goodsId == goodsId){
+            if (goodsArrayList.get(i).goodsId == goodsId) {
                 goodsArrayList.remove(goodsArrayList.get(i));
             }
         }
     }
 
-    public static void GetGoodsByName (String keyword){
-        if (keyword.isEmpty()){
+    public static void GetGoodsByName(String keyword) {
+        if (keyword.isEmpty()) {
             System.out.println("keyword is empty");
         } else {
 
@@ -68,8 +61,8 @@ public class Goods {
             }
         }
     }
-    
-    public static void GetGoodsByPrice (int goodsPrice){
+
+    public static void GetGoodsByPrice(int goodsPrice) {
         for (Goods goods : goodsArrayList) {
             if (goods.goodsPrice == goodsPrice) {
                 System.out.println(goods);
@@ -77,8 +70,8 @@ public class Goods {
         }
     }
 
-    public static void GetGoodsByVendor (String vendor){
-        if (vendor.isEmpty()){
+    public static void GetGoodsByVendor(String vendor) {
+        if (vendor.isEmpty()) {
             System.out.println("keyword is empty");
         } else {
 
@@ -90,8 +83,7 @@ public class Goods {
         }
     }
 
-
-    public static void PrintAllGoods (){
+    public static void PrintAllGoods() {
         for (Goods goods : goodsArrayList) {
             System.out.println("Id = " + goods.goodsId +
                     ";" + goods.goodsName +
@@ -101,29 +93,25 @@ public class Goods {
         }
     }
 
-    public static void PrintForSaleGoods(){
-        for (Goods goods : goodsArrayList){
-            if (goods.forsale == true){
+    public static void PrintForSaleGoods() {
+        for (Goods goods : goodsArrayList) {
+            if (goods.forsale) {
                 System.out.println(goods);
             }
         }
     }
 
-    public static void ChangeOrdered (int goodsId, int quantityOfgoods, boolean oper){
+    public static void ChangeOrdered(int goodsId, int quantityOfgoods, boolean oper) {
 
-        for (Goods goods : goodsArrayList){
-            if (goods.goodsId == goodsId && oper){
+        for (Goods goods : goodsArrayList) {
+            if (goods.goodsId == goodsId && oper) {
                 goods.ordered = goods.ordered + quantityOfgoods;
             }
-            if (goods.goodsId == goodsId && oper == false){
+            if (goods.goodsId == goodsId && !oper) {
                 goods.ordered = goods.ordered - quantityOfgoods;
             }
 
         }
-    }
-
-    public int getGoodsId() {
-        return goodsId;
     }
 
     public static String getGoodsName(int goodsId) {
@@ -144,10 +132,18 @@ public class Goods {
         return 7777777;
     }
 
+    public String getVendor() {
+        return vendor;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
     @Override
     public String toString() {
         System.out.print("Id = " + goodsId + "; Name = " + goodsName +
-                "; Price = " + goodsPrice + "; Vendor =  " + vendor + "; ForSale =  " + forsale +  "; Ordered = " + ordered + "; Object = ");
+                "; Price = " + goodsPrice + "; Vendor =  " + vendor + "; ForSale =  " + forsale + "; Ordered = " + ordered + "; Object = ");
         return super.toString();
     }
 }

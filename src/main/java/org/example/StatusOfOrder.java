@@ -1,12 +1,12 @@
 package org.example;
 
 public enum StatusOfOrder {
-    PAID ("\"Оплачен\""),
-    ASSEMBLY ("\"Сборка заказа\""),
-    DELIVERY ("\"Доставка заказа\""),
-    READY ("\"Готов к выдаче\"");
+    PAID("\"Оплачен\""),
+    ASSEMBLY("\"Сборка заказа\""),
+    DELIVERY("\"Доставка заказа\""),
+    READY("\"Готов к выдаче\"");
 
-    private String title;
+    private final String title;
 
     StatusOfOrder(String title) {
         this.title = title;

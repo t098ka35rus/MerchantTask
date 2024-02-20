@@ -17,9 +17,6 @@ public class Main {
         Orders.ProcessingOrder(0);
 
 
-
-
-
     }
 
 }
