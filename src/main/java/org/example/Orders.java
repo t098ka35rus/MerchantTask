@@ -8,23 +8,22 @@ import static org.example.StatusOfOrder.PAID;
 
 public class Orders {
     private static final ArrayList<Orders> ordersArrayList = new ArrayList<>();
+    private static final int productParams = 2;
+    private static final Scanner scanner = new Scanner(System.in);
     private static int numberOfOrders;
     private static int orderIdCurrent;
-    private static final int productParams = 2;
-    private static String[] parts;
-    private static final Scanner scanner = new Scanner(System.in);
+    private final ArrayList<int[]> goodsOfOrder = new ArrayList<>();
     private int orderId;
     private long orderDate;
-    private int clientId;
     private String orderStatus;
-    private final ArrayList<int[]> goodsOfOrder = new ArrayList<>();
+    private int clientId;
 
     public static void AddOrder(int clientId) {
         Orders order = new Orders();
         order.orderId = orderIdCurrent;
-        orderIdCurrent++;
-        numberOfOrders ++;
         order.clientId = clientId;
+        orderIdCurrent++;
+        numberOfOrders++;
         order.orderDate = System.currentTimeMillis();
         order.orderStatus = "Заказ размещен";
         ordersArrayList.add(order);
@@ -35,7 +34,7 @@ public class Orders {
             System.out.println("Введите ID товара и количество через пробел, end для завершения");
             String inputString = scanner.nextLine();
             if (!inputString.equals("end")) {
-                parts = inputString.split(" ");
+                String[] parts = inputString.split(" ");
                 int productId = Integer.parseInt(parts[0]);
                 int productCount = Integer.parseInt(parts[1]);
                 int[] productPosition = new int[productParams];
@@ -44,18 +43,18 @@ public class Orders {
                 Goods.ChangeOrdered(productId, productCount, true);
                 System.out.println("i = " + i);
                 orderedGoods.add(i, productPosition);
-                for (int j = 0; j < orderedGoods.size(); j++) {
-                    for (int k = 0; k < productPosition.length; k++) {
-                        int[] buffer = orderedGoods.get(j);
-                        System.out.print(buffer[k] + ",");
+                for (int[] orderedGood : orderedGoods) {
+                    {
+                        System.out.print(orderedGood[0] + ",");
+                    }
+                    {
+                        System.out.print(orderedGood[1] + ",");
                     }
                     System.out.println();
                 }
                 i++;
             } else {
-                for (int j = 0; j < orderedGoods.size(); j++) {
-                    order.goodsOfOrder.add(orderedGoods.get(j));
-                }
+                order.goodsOfOrder.addAll(orderedGoods);
                 orderedGoods.clear();
                 Orders.PrintOrder(order.orderId);
                 break;
@@ -97,6 +96,7 @@ public class Orders {
         int readyLimit = 4000;
 
 
+        assert order != null;
         long delta = System.currentTimeMillis() - order.orderDate;
         System.out.println("delta = " + delta);
         System.out.println(statusOfOrder);
@@ -131,7 +131,13 @@ public class Orders {
         return null;
     }
 
-    public static void RemoveOrder (int orderId){}
+    public static void RemoveOrder(int orderId) {
+        for (Orders order : ordersArrayList) {
+            if (order.orderId == orderId) {
+                ordersArrayList.remove(order);
+            }
+        }
+    }
 
 
 }

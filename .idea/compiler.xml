@@ -9,8 +9,5 @@
         <module name="MerchantTask" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="MerchantTask" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>

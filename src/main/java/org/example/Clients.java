@@ -2,17 +2,41 @@ package org.example;
 
 import java.util.ArrayList;
 
-public class Clients {
-    private int numberOfclients;
-    private int currentClient;
+public class Clients implements Dealable {
+    private static int clientsCounter;
+    private static int currentClient;
     private int clientId;
-    private String Name;
+    private String name;
     private static final ArrayList<Clients> clientsArrayList = new ArrayList<>();
-    public void AddClient(String name) {
+
+    private Clients (){};
+    public static void AddClient(String name) {
         Clients client = new Clients();
-        client.Name = name;
+        client.name = name;
         client.clientId = currentClient;
         currentClient ++;
-        numberOfclients ++;
+        clientsCounter ++;
+        clientsArrayList.add(client);
+        System.out.println(client);
+    }
+    public static boolean FindClient (int clientId){
+        for (Clients client : clientsArrayList) {
+            if (client.clientId == clientId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    @Override
+    public void makeDeal() {
+        Orders.AddOrder(clientId);
+    }
+
+    @Override
+    public String toString() {
+        System.out.println("Создан клиент. Id = " + clientId + " Name = " + name + " : ");
+        return super.toString();
     }
 }
