@@ -101,6 +101,15 @@ public class Goods {
         }
     }
 
+    public static boolean FindGoods (int goodsId) {
+        for (Goods goods : goodsArrayList) {
+            if (goodsId == goods.goodsId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void ChangeOrdered(int goodsId, int quantityOfgoods, boolean oper) {
 
         for (Goods goods : goodsArrayList) {
@@ -139,6 +148,7 @@ public class Goods {
     public int getGoodsId() {
         return goodsId;
     }
+
 
     @Override
     public String toString() {

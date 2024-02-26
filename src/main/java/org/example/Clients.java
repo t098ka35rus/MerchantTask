@@ -19,9 +19,9 @@ public class Clients implements Dealable {
         clientsArrayList.add(client);
         System.out.println(client);
     }
-    public static boolean FindClient (int clientId){
+    public static boolean FindClient (String name){
         for (Clients client : clientsArrayList) {
-            if (client.clientId == clientId) {
+            if (client.name == name) {
                 return true;
             }
         }

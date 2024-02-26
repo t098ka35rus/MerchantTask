@@ -13,12 +13,10 @@ public class Main {
         Goods.AddGood("апельсины", 7, "турция");
         Goods.PrintForSaleGoods();
         System.out.println("Работаем с клиентом");
-
-        Clients.AddClient("Тимофей");
         Orders.AddOrder(1);
-        Thread.sleep(9000);
-        System.out.println("прошло 9 секунд");
-        Orders.ProcessingOrder(0);
+
+
+
 
 
     }

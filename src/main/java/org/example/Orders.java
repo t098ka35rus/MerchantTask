@@ -3,12 +3,16 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static org.example.Goods.getGoodsPrice;
 import static org.example.StatusOfOrder.DELIVERY;
 import static org.example.StatusOfOrder.PAID;
 
 public class Orders {
     private static final ArrayList<Orders> ordersArrayList = new ArrayList<>();
     private static final int productParams = 2;
+    private static final int goodsIdPosition = 0;
+    private static final int goodsQuantPosition = 1;
+
     private static final Scanner scanner = new Scanner(System.in);
     private static int numberOfOrders;
     private static int orderIdCurrent;
@@ -16,6 +20,7 @@ public class Orders {
     private int orderId;
     private long orderDate;
     private String orderStatus;
+    private int orderTotalCost;
     private int clientId;
 
     public static void AddOrder(int clientId) {
@@ -40,26 +45,78 @@ public class Orders {
                 int[] productPosition = new int[productParams];
                 productPosition[0] = productId;
                 productPosition[1] = productCount;
-                Goods.ChangeOrdered(productId, productCount, true);
-                System.out.println("i = " + i);
-                orderedGoods.add(i, productPosition);
-                for (int[] orderedGood : orderedGoods) {
-                    {
-                        System.out.print(orderedGood[0] + ",");
-                    }
-                    {
-                        System.out.print(orderedGood[1] + ",");
-                    }
-                    System.out.println();
+                if (Goods.FindGoods(productId) == false){
+                    System.out.println("Нет такого товара");
+                    continue;
                 }
+                if (order.goodsOfOrder.isEmpty()){
+                    order.goodsOfOrder.add(productPosition);
+                    continue;
+                }
+                if (order.goodsOfOrder.size() != 0){
+                    for (int j = 0; j < order.goodsOfOrder.size(); j++) {
+                        int [] goods = order.goodsOfOrder.get(j);
+                        int id = goods [goodsIdPosition];
+                        int quant = goods [goodsQuantPosition];
+                        if (productId == id){
+                            System.out.println("Id true");
+                            goods [goodsQuantPosition] = quant + productCount;
+                            order.goodsOfOrder.set(j,goods);
+                        }
+                    }
+                        order.goodsOfOrder.add(productPosition);
+                }
+
+
+                System.out.println("GoodsOforder.size = " + order.goodsOfOrder.size());
+                Goods.ChangeOrdered(productId, productCount, true);
+                order.orderTotalCost = order.orderTotalCost + Goods.getGoodsPrice(productId) * productCount;
+                System.out.println("i = " + i);
+
+
+                //orderedGoods.add(i, productPosition);
                 i++;
             } else {
-                order.goodsOfOrder.addAll(orderedGoods);
-                orderedGoods.clear();
+                /*
+                System.out.println("ОRDERED GOODS:");
+                for (int j = 0; j < orderedGoods.size(); j++) {
+                    int buf [] = orderedGoods.get(j);
+                    System.out.println("Id = " + buf [0] + "; Quality = " + buf [1]);
+                }
+
+                for (int j = 0; j < orderedGoods.size(); j++) {
+                    int [] buf = orderedGoods.get(j);
+                    for (int k = orderedGoods.size() - 1; k > 0 ; k--) {
+                        int [] bufNext = orderedGoods.get(k);
+                        if (buf [0] == bufNext [0]){
+                            buf [1] = buf [1] + bufNext [1];
+                        }
+                        order.goodsOfOrder.add(buf);
+                    }
+                }
+
+                System.out.println("ОRDERED GOODS 1:");
+                for (int j = 0; j < orderedGoods.size(); j++) {
+                    int buf [] = orderedGoods.get(j);
+                    System.out.println("Id = " + buf [0] + "; Quality = " + buf [1]);
+                }
+                */
+
+                //order.goodsOfOrder.addAll(orderedGoods);
+                //orderedGoods.clear();
                 Orders.PrintOrder(order.orderId);
                 break;
             }
         }
+    }
+
+    public static void RepeatOrder (int orderId){
+        Orders order = FindOrder(orderId);
+        order.orderId = orderIdCurrent;
+        orderIdCurrent ++;
+        numberOfOrders ++;
+        ordersArrayList.add(order);
+        PrintOrder(order.orderId);
     }
 
     public static void PrintOrder(int orderId) {
@@ -68,20 +125,8 @@ public class Orders {
             if (order.orderId == orderId) {
                 System.out.println("ВАШ ЗАКАЗ");
                 System.out.println("Id заказа = " + order.orderId);
-                for (int i = 0; i < order.goodsOfOrder.size(); i++) {
-                    for (int j = 0; j < productParams - 1; j++) {
-                        int[] buffer = order.goodsOfOrder.get(i);
-                        int price = Goods.getGoodsPrice(buffer[j]);
-                        int cost = price * buffer[j + 1];
-                        totalCost += cost;
-                        System.out.println("Id Товара = " + buffer[j] + ";"
-                                + Goods.getGoodsName(buffer[j]) + ";"
-                                + "Количество = " + buffer[j + 1] + ";"
-                                + "Цена = " + price + ";"
-                                + "Стоимость = " + cost);
-                    }
-                }
-                System.out.println("СТОИМОСТЬ ЗАКАЗА = " + totalCost);
+                PrintGoodsOfOrder(order);
+                System.out.println("СТОИМОСТЬ ЗАКАЗА = " + order.orderTotalCost);
             }
         }
     }
@@ -131,6 +176,8 @@ public class Orders {
         return null;
     }
 
+
+
     public static void RemoveOrder(int orderId) {
         for (Orders order : ordersArrayList) {
             if (order.orderId == orderId) {
@@ -139,7 +186,37 @@ public class Orders {
         }
     }
 
+    public static void PrintAllOrders (){
+        System.out.println("СПИСОК ТОВАРОВ:");
+        for (Orders order : ordersArrayList) {
+            System.out.println(order.toString());
+            }
+    }
 
+    private static void PrintGoodsOfOrder(Orders order){
+        int totalCost = 0;
+        for (int i = 0; i < order.goodsOfOrder.size(); i++) {
+            for (int j = 0; j < productParams - 1; j++) {
+                int[] buffer = order.goodsOfOrder.get(i);
+                int price = getGoodsPrice(buffer[j]);
+                int cost = price * buffer[j + 1];
+                totalCost += cost;
+                System.out.println("Id Товара = " + buffer[j] + ";"
+                        + Goods.getGoodsName(buffer[j]) + ";"
+                        + "Количество = " + buffer[j + 1] + ";"
+                        + "Цена = " + price + ";"
+                        + "Стоимость = " + cost);
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+
+        return super.toString();
+    }
 }
+
+
 
 
