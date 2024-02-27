@@ -50,21 +50,27 @@ public class Orders {
                     continue;
                 }
                 if (order.goodsOfOrder.isEmpty()){
+                    System.out.println("Добавлен первый товар");
                     order.goodsOfOrder.add(productPosition);
                     continue;
                 }
-                if (order.goodsOfOrder.size() != 0){
+                if (Orders.FindProductInOrder(order.orderId,productId) == false){
+                    System.out.println("Добавлен новый товар");
+                    order.goodsOfOrder.add(productPosition);
+                    continue;
+                }
+                if (Orders.FindProductInOrder(order.orderId,productId) == true){
                     for (int j = 0; j < order.goodsOfOrder.size(); j++) {
-                        int [] goods = order.goodsOfOrder.get(j);
-                        int id = goods [goodsIdPosition];
-                        int quant = goods [goodsQuantPosition];
-                        if (productId == id){
-                            System.out.println("Id true");
-                            goods [goodsQuantPosition] = quant + productCount;
-                            order.goodsOfOrder.set(j,goods);
+                        int [] prod = order.goodsOfOrder.get(j);
+                        int id = prod[goodsIdPosition];
+                        int quant =  prod[goodsQuantPosition];
+                        if (id == productId){
+                            prod[goodsQuantPosition] = quant + productCount;
+                            order.goodsOfOrder.set(j,prod);
+                            System.out.println("Увеличили количество товара");
+
                         }
                     }
-                        order.goodsOfOrder.add(productPosition);
                 }
 
 
@@ -174,6 +180,16 @@ public class Orders {
         }
         System.out.println("Заказ " + orderId + " не найден");
         return null;
+    }
+    public static boolean FindProductInOrder (int orderId, int goodsId){
+        Orders order = FindOrder(orderId);
+        for (int i = 0; i < order.goodsOfOrder.size(); i++) {
+            int [] goods = order.goodsOfOrder.get(i);
+            if (goods [goodsIdPosition] == goodsId){
+                return true;
+            }
+        }
+        return false;
     }
 
 

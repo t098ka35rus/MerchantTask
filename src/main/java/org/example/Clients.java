@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 
-public class Clients implements Dealable {
+public class Clients  {
     private static int clientsCounter;
     private static int currentClient;
     private int clientId;
@@ -29,10 +29,7 @@ public class Clients implements Dealable {
     }
 
 
-    @Override
-    public void makeDeal() {
-        Orders.AddOrder(clientId);
-    }
+
 
     @Override
     public String toString() {
