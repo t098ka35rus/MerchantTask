@@ -21,8 +21,8 @@ public class Clients  {
     }
     public static boolean FindClient (String name){
         for (Clients client : clientsArrayList) {
-            if (client.name == name) {
-                return true;
+            if (client.name.equals(name)) {
+               return true;
             }
         }
         return false;

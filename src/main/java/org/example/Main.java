@@ -1,8 +1,13 @@
 package org.example;
 
 
+import java.util.Scanner;
+
 public class Main {
+
     public static void main(String[] args) throws Throwable  {
+        Scanner scanner = new Scanner(System.in);
+        String inputstring;
         System.out.println("Поехали!");
         System.out.println("Добавляем товары");
         Goods.AddGood("яблоки", 2, "турция");
@@ -13,7 +18,20 @@ public class Main {
         Goods.AddGood("апельсины", 7, "турция");
         Goods.PrintForSaleGoods();
         System.out.println("Работаем с клиентом");
-        Orders.AddOrder(1);
+       while (true){
+           System.out.print("Введите ваше имя (либо exit для выхода): ");
+           inputstring = scanner.nextLine();
+           if (inputstring.equals("exit")){
+               break;
+           }
+           if (!Clients.FindClient(inputstring)){
+               Clients.AddClient(inputstring);
+               System.out.println("Вы наш новый клиент № ");
+           } else {
+               System.out.println("Добрый день Дружище");
+           }
+
+       }
 
 
 

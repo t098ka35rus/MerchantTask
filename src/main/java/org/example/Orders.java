@@ -67,7 +67,7 @@ public class Orders {
                         if (id == productId){
                             prod[goodsQuantPosition] = quant + productCount;
                             order.goodsOfOrder.set(j,prod);
-                            System.out.println("Увеличили количество товара");
+                            System.out.println("Увеличили количество товара.");
 
                         }
                     }
@@ -83,33 +83,7 @@ public class Orders {
                 //orderedGoods.add(i, productPosition);
                 i++;
             } else {
-                /*
-                System.out.println("ОRDERED GOODS:");
-                for (int j = 0; j < orderedGoods.size(); j++) {
-                    int buf [] = orderedGoods.get(j);
-                    System.out.println("Id = " + buf [0] + "; Quality = " + buf [1]);
-                }
 
-                for (int j = 0; j < orderedGoods.size(); j++) {
-                    int [] buf = orderedGoods.get(j);
-                    for (int k = orderedGoods.size() - 1; k > 0 ; k--) {
-                        int [] bufNext = orderedGoods.get(k);
-                        if (buf [0] == bufNext [0]){
-                            buf [1] = buf [1] + bufNext [1];
-                        }
-                        order.goodsOfOrder.add(buf);
-                    }
-                }
-
-                System.out.println("ОRDERED GOODS 1:");
-                for (int j = 0; j < orderedGoods.size(); j++) {
-                    int buf [] = orderedGoods.get(j);
-                    System.out.println("Id = " + buf [0] + "; Quality = " + buf [1]);
-                }
-                */
-
-                //order.goodsOfOrder.addAll(orderedGoods);
-                //orderedGoods.clear();
                 Orders.PrintOrder(order.orderId);
                 break;
             }
@@ -198,6 +172,7 @@ public class Orders {
         for (Orders order : ordersArrayList) {
             if (order.orderId == orderId) {
                 ordersArrayList.remove(order);
+                numberOfOrders --;
             }
         }
     }
@@ -206,6 +181,7 @@ public class Orders {
         System.out.println("СПИСОК ТОВАРОВ:");
         for (Orders order : ordersArrayList) {
             System.out.println(order.toString());
+            System.out.println("Всего заказов = " + numberOfOrders);
             }
     }
 
