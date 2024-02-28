@@ -1,5 +1,9 @@
 package org.example;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 
 public class Goods {
@@ -49,7 +53,7 @@ public class Goods {
         }
     }
 
-    public static void GetGoodsByName(String keyword) {
+    public static void GetGoodsByName(@NotNull String keyword) {
         if (keyword.isEmpty()) {
             System.out.println("keyword is empty");
         } else {
@@ -70,7 +74,7 @@ public class Goods {
         }
     }
 
-    public static void GetGoodsByVendor(String vendor) {
+    public static void GetGoodsByVendor(@NotNull String vendor) {
         if (vendor.isEmpty()) {
             System.out.println("keyword is empty");
         } else {
@@ -101,7 +105,7 @@ public class Goods {
         }
     }
 
-    public static boolean FindGoods (int goodsId) {
+    public static boolean FindGoods(int goodsId) {
         for (Goods goods : goodsArrayList) {
             if (goodsId == goods.goodsId) {
                 return true;
@@ -123,7 +127,8 @@ public class Goods {
         }
     }
 
-    public static String getGoodsName(int goodsId) {
+    @Contract(pure = true)
+    public static @Nullable String getGoodsName(int goodsId) {
         for (Goods goods : goodsArrayList) {
             if (goods.goodsId == goodsId) {
                 return goods.goodsName;

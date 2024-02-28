@@ -1,5 +1,8 @@
 package org.example;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -45,28 +48,28 @@ public class Orders {
                 int[] productPosition = new int[productParams];
                 productPosition[0] = productId;
                 productPosition[1] = productCount;
-                if (Goods.FindGoods(productId) == false){
+                if (!Goods.FindGoods(productId)) {
                     System.out.println("Нет такого товара");
                     continue;
                 }
-                if (order.goodsOfOrder.isEmpty()){
+                if (order.goodsOfOrder.isEmpty()) {
                     System.out.println("Добавлен первый товар");
                     order.goodsOfOrder.add(productPosition);
                     continue;
                 }
-                if (Orders.FindProductInOrder(order.orderId,productId) == false){
+                if (!Orders.FindProductInOrder(order.orderId, productId)) {
                     System.out.println("Добавлен новый товар");
                     order.goodsOfOrder.add(productPosition);
                     continue;
                 }
-                if (Orders.FindProductInOrder(order.orderId,productId) == true){
+                if (Orders.FindProductInOrder(order.orderId, productId)) {
                     for (int j = 0; j < order.goodsOfOrder.size(); j++) {
-                        int [] prod = order.goodsOfOrder.get(j);
+                        int[] prod = order.goodsOfOrder.get(j);
                         int id = prod[goodsIdPosition];
-                        int quant =  prod[goodsQuantPosition];
-                        if (id == productId){
+                        int quant = prod[goodsQuantPosition];
+                        if (id == productId) {
                             prod[goodsQuantPosition] = quant + productCount;
-                            order.goodsOfOrder.set(j,prod);
+                            order.goodsOfOrder.set(j, prod);
                             System.out.println("Увеличили количество товара.");
 
                         }
@@ -90,11 +93,11 @@ public class Orders {
         }
     }
 
-    public static void RepeatOrder (int orderId){
+    public static void RepeatOrder(int orderId) {
         Orders order = FindOrder(orderId);
         order.orderId = orderIdCurrent;
-        orderIdCurrent ++;
-        numberOfOrders ++;
+        orderIdCurrent++;
+        numberOfOrders++;
         ordersArrayList.add(order);
         PrintOrder(order.orderId);
     }
@@ -146,7 +149,7 @@ public class Orders {
         }
     }
 
-    public static Orders FindOrder(int orderId) {
+    public static @Nullable Orders FindOrder(int orderId) {
         for (Orders order : ordersArrayList) {
             if (order.orderId == orderId) {
                 return order;
@@ -155,11 +158,12 @@ public class Orders {
         System.out.println("Заказ " + orderId + " не найден");
         return null;
     }
-    public static boolean FindProductInOrder (int orderId, int goodsId){
+
+    public static boolean FindProductInOrder(int orderId, int goodsId) {
         Orders order = FindOrder(orderId);
         for (int i = 0; i < order.goodsOfOrder.size(); i++) {
-            int [] goods = order.goodsOfOrder.get(i);
-            if (goods [goodsIdPosition] == goodsId){
+            int[] goods = order.goodsOfOrder.get(i);
+            if (goods[goodsIdPosition] == goodsId) {
                 return true;
             }
         }
@@ -167,25 +171,24 @@ public class Orders {
     }
 
 
-
     public static void RemoveOrder(int orderId) {
         for (Orders order : ordersArrayList) {
             if (order.orderId == orderId) {
                 ordersArrayList.remove(order);
-                numberOfOrders --;
+                numberOfOrders--;
             }
         }
     }
 
-    public static void PrintAllOrders (){
+    public static void PrintAllOrders() {
         System.out.println("СПИСОК ТОВАРОВ:");
         for (Orders order : ordersArrayList) {
             System.out.println(order.toString());
             System.out.println("Всего заказов = " + numberOfOrders);
-            }
+        }
     }
 
-    private static void PrintGoodsOfOrder(Orders order){
+    private static void PrintGoodsOfOrder(@NotNull Orders order) {
         int totalCost = 0;
         for (int i = 0; i < order.goodsOfOrder.size(); i++) {
             for (int j = 0; j < productParams - 1; j++) {
