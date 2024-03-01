@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a29b7d0-be27-405c-8d21-5b99d4f655a7" name="Changes" comment="commit 6">
+    <list default="true" id="0a29b7d0-be27-405c-8d21-5b99d4f655a7" name="Changes" comment="commit 9">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Clients.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Clients.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Goods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Goods.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Orders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Orders.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/Goods.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Goods.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Orders.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Orders.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,7 +302,23 @@
       <option name="project" value="LOCAL" />
       <updated>1709044070160</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="commit 9">
+      <option name="closed" value="true" />
+      <created>1709092240343</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1709092240343</updated>
+    </task>
+    <task id="LOCAL-00020" summary="commit 9">
+      <option name="closed" value="true" />
+      <created>1709092305995</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1709092305995</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -346,6 +359,7 @@
     <MESSAGE value="commit 5" />
     <MESSAGE value="commit 7" />
     <MESSAGE value="commit 6" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit 6" />
+    <MESSAGE value="commit 9" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit 9" />
   </component>
 </project>

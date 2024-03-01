@@ -57,12 +57,13 @@ public class Goods {
         if (keyword.isEmpty()) {
             System.out.println("keyword is empty");
         } else {
-
             for (Goods goods : goodsArrayList) {
                 if (goods.goodsName.contains(keyword)) {
                     System.out.println(goods);
                 }
+
             }
+
         }
     }
 

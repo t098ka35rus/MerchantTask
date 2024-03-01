@@ -9,18 +9,9 @@ public class Clients implements Dealable {
     private static final ArrayList<Clients> clientsArrayList = new ArrayList<>();
     private static int clientsCounter;
     private static int currentClient;
-
-    public int getClientId() {
-        return clientId;
-    }
-
     private int clientId;
-
-    public String getName() {
-        return name;
-    }
-
     private String name;
+
     private Clients() {
     }
 
@@ -43,7 +34,7 @@ public class Clients implements Dealable {
     }
 
     @Contract(pure = true)
-    public static @Nullable Clients FindClient(String name){
+    public static @Nullable Clients FindClient(String name) {
         for (Clients client : clientsArrayList) {
             if (client.name.equals(name)) {
                 return client;
@@ -52,6 +43,13 @@ public class Clients implements Dealable {
         return null;
     }
 
+    public int getClientId() {
+        return clientId;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String toString() {
