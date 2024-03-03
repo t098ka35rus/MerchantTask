@@ -43,6 +43,15 @@ public class Clients implements Dealable {
         return null;
     }
 
+    public static Clients GetClient (int clientId) {
+        for (Clients client : clientsArrayList) {
+            if (client.getClientId() == clientId) {
+                return client;
+            }
+        }
+        return null;
+    }
+
     public int getClientId() {
         return clientId;
     }

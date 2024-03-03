@@ -4,6 +4,7 @@ public enum StatusOfOrder {
     PAID("\"Оплачен\""),
     ASSEMBLY("\"Сборка заказа\""),
     DELIVERY("\"Доставка заказа\""),
+    CHECK ("\"Проверка комплектности\""),
     READY("\"Готов к выдаче\"");
 
     private final String title;

@@ -19,7 +19,7 @@ public class Orders {
     private static final Scanner scanner = new Scanner(System.in);
     private static int numberOfOrders;
     private static int orderIdCurrent;
-    private final ArrayList<int[]> goodsOfOrder = new ArrayList<>();
+    private ArrayList<int[]> goodsOfOrder = new ArrayList<>();
     private int orderId;
     private long orderDate;
     private String orderStatus;
@@ -36,15 +36,20 @@ public class Orders {
         order.orderStatus = "Заказ размещен";
         ordersArrayList.add(order);
         numberOfOrders++;
-        ArrayList<int[]> orderedGoods = new ArrayList<>();
-        int i = 0;
+        int productId = 0;
+        int productCount = 0;
         while (true) {
             System.out.println("Введите ID товара и количество через пробел, end для завершения");
             String inputString = scanner.nextLine();
             if (!inputString.equals("end")) {
                 String[] parts = inputString.split(" ");
-                int productId = Integer.parseInt(parts[0]);
-                int productCount = Integer.parseInt(parts[1]);
+                try {
+                    productId = Integer.parseInt(parts[0]);
+                    productCount = Integer.parseInt(parts[1]);
+                } catch (Exception e){
+                    System.out.println("Внимание! Введите два числа, через пробел");
+                    continue;
+                }
                 int[] productPosition = new int[productParams];
                 productPosition[0] = productId;
                 productPosition[1] = productCount;
@@ -55,11 +60,13 @@ public class Orders {
                 if (order.goodsOfOrder.isEmpty()) {
                     System.out.println("Добавлен первый товар");
                     order.goodsOfOrder.add(productPosition);
+                    order.orderTotalCost = order.orderTotalCost + Goods.getGoodsPrice(productId) * productCount;
                     continue;
                 }
                 if (!Orders.FindProductInOrder(order.orderId, productId)) {
                     System.out.println("Добавлен новый товар");
                     order.goodsOfOrder.add(productPosition);
+                    order.orderTotalCost = order.orderTotalCost + Goods.getGoodsPrice(productId) * productCount;
                     continue;
                 }
                 if (Orders.FindProductInOrder(order.orderId, productId)) {
@@ -71,22 +78,11 @@ public class Orders {
                             prod[goodsQuantPosition] = quant + productCount;
                             order.goodsOfOrder.set(j, prod);
                             System.out.println("Увеличили количество товара.");
-
+                            order.orderTotalCost = order.orderTotalCost + Goods.getGoodsPrice(productId) * productCount;
                         }
                     }
                 }
-
-
-                System.out.println("GoodsOforder.size = " + order.goodsOfOrder.size());
-                Goods.ChangeOrdered(productId, productCount, true);
-                order.orderTotalCost = order.orderTotalCost + Goods.getGoodsPrice(productId) * productCount;
-                System.out.println("i = " + i);
-
-
-                //orderedGoods.add(i, productPosition);
-                i++;
-            } else {
-
+                } else {
                 Orders.PrintOrder(order.orderId);
                 break;
             }
@@ -95,11 +91,13 @@ public class Orders {
 
     public static void RepeatOrder(int orderId) {
         Orders order = FindOrder(orderId);
-        order.orderId = orderIdCurrent;
+        Orders newOrder = new Orders();
+        newOrder.orderId = orderIdCurrent;
         orderIdCurrent++;
         numberOfOrders++;
-        ordersArrayList.add(order);
-        PrintOrder(order.orderId);
+        newOrder.clientId = order.clientId;
+        newOrder.goodsOfOrder = order.goodsOfOrder;
+        ordersArrayList.add(newOrder);
     }
 
     public static void PrintOrder(int orderId) {
@@ -116,8 +114,8 @@ public class Orders {
 
     public static void ProcessingOrder(int orderId) {
         Orders order = FindOrder(orderId);
-        StatusOfOrder statusOfOrder;
-        statusOfOrder = DELIVERY;
+        //StatusOfOrder statusOfOrder;
+        //statusOfOrder = DELIVERY;
         int paidLimit = 10000;
         int assemblyLimit = 15000;
         int deliveryLimit = 10000;
@@ -127,7 +125,7 @@ public class Orders {
         assert order != null;
         long delta = System.currentTimeMillis() - order.orderDate;
         System.out.println("delta = " + delta);
-        System.out.println(statusOfOrder);
+        //System.out.println(statusOfOrder);
 
         if (delta < paidLimit) {
             order.orderStatus = PAID.toString();
@@ -138,12 +136,16 @@ public class Orders {
             order.orderStatus = StatusOfOrder.ASSEMBLY.toString();
             System.out.println("Заказ № " + orderId + " в статусе " + order.orderStatus);
         }
-        if (delta > paidLimit + assemblyLimit && delta < paidLimit + assemblyLimit + deliveryLimit) {
+        if (delta < paidLimit + assemblyLimit && delta < paidLimit + assemblyLimit + deliveryLimit) {
             order.orderStatus = StatusOfOrder.DELIVERY.toString();
             System.out.println("Заказ № " + orderId + " в статусе " + order.orderStatus);
         }
 
         if (delta > paidLimit + assemblyLimit + deliveryLimit && delta < paidLimit + assemblyLimit + deliveryLimit + readyLimit) {
+            order.orderStatus = StatusOfOrder.CHECK.toString();
+            System.out.println("Заказ № " + orderId + " в статусе " + order.orderStatus);
+        }
+        if (delta > paidLimit + assemblyLimit + deliveryLimit + readyLimit) {
             order.orderStatus = StatusOfOrder.READY.toString();
             System.out.println("Заказ № " + orderId + " в статусе " + order.orderStatus);
         }
@@ -172,19 +174,17 @@ public class Orders {
 
 
     public static void RemoveOrder(int orderId) {
-        for (Orders order : ordersArrayList) {
-            if (order.orderId == orderId) {
-                ordersArrayList.remove(order);
-                numberOfOrders--;
-            }
-        }
+      Orders order = Orders.FindOrder(orderId);
+      int index = ordersArrayList.indexOf(order);
+       ordersArrayList.remove(index);
     }
 
-    public static void PrintAllOrders() {
-        System.out.println("СПИСОК ТОВАРОВ:");
+    public static void PrintClientOrders(int clientId) {
+        System.out.println("ВОТ ВАШИ ЗАКАЗЫ " + Clients.GetClient(clientId).getName() + " !");
         for (Orders order : ordersArrayList) {
-            System.out.println(order.toString());
-            System.out.println("Всего заказов = " + numberOfOrders);
+            if (order.clientId == clientId){
+                Orders.PrintOrder(order.orderId);
+            }
         }
     }
 

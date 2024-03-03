@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Goods {
     private static final ArrayList<Goods> goodsArrayList = new ArrayList<>();
@@ -16,6 +17,16 @@ public class Goods {
     private String goodsName;
     private String vendor;
     private boolean forsale;
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    private int discount;
 
 
     private Goods() {
@@ -54,11 +65,12 @@ public class Goods {
     }
 
     public static void GetGoodsByName(@NotNull String keyword) {
+        String lkeyword = keyword.toLowerCase(Locale.ROOT);
         if (keyword.isEmpty()) {
             System.out.println("keyword is empty");
         } else {
             for (Goods goods : goodsArrayList) {
-                if (goods.goodsName.contains(keyword)) {
+                if (goods.goodsName.contains(lkeyword)) {
                     System.out.println(goods);
                 }
 
@@ -69,19 +81,20 @@ public class Goods {
 
     public static void GetGoodsByPrice(int goodsPrice) {
         for (Goods goods : goodsArrayList) {
-            if (goods.goodsPrice == goodsPrice) {
+            if (goods.goodsPrice <= goodsPrice) {
                 System.out.println(goods);
             }
         }
     }
 
     public static void GetGoodsByVendor(@NotNull String vendor) {
+      String lv =vendor.toLowerCase(Locale.ROOT);
         if (vendor.isEmpty()) {
             System.out.println("keyword is empty");
         } else {
 
             for (Goods goods : goodsArrayList) {
-                if (goods.vendor.equals(vendor)) {
+                if (goods.vendor.contains(lv)) {
                     System.out.println(goods);
                 }
             }
@@ -147,6 +160,27 @@ public class Goods {
         return 7777777;
     }
 
+    public static void SetDiscount(int goodsId, int discount){
+        for (Goods goods : goodsArrayList) {
+            if (goods.goodsId == goodsId){
+                goods.setDiscount(discount);
+            }
+        }
+    }
+    public static void ListDiscount(){
+        System.out.println("КУПИТЕ ТОВАРЫ СО СКИДКОЙ!");
+        for (Goods goods : goodsArrayList) {
+            if (goods.discount > 0){
+                System.out.println("Id = " + goods.goodsId
+                        + "; Name = " + goods.goodsName
+                        +"; Price = " + goods.goodsPrice
+                        + "; Vendor =  " + goods.vendor
+                        + "; Discount = " + goods.discount);
+            }
+        }
+    }
+
+
     public String getVendor() {
         return vendor;
     }
@@ -159,7 +193,7 @@ public class Goods {
     @Override
     public String toString() {
         System.out.print("Id = " + goodsId + "; Name = " + goodsName +
-                "; Price = " + goodsPrice + "; Vendor =  " + vendor + "; ForSale =  " + forsale + "; Ordered = " + ordered + "; Object = ");
+                "; Price = " + goodsPrice + "; Vendor =  " + vendor + "; ForSale =  " + forsale + "; Ordered = " + ordered + "; Discount = " + discount + "; Object = ");
         return super.toString();
     }
 }
