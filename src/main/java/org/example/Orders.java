@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static org.example.Goods.getGoodsPrice;
-import static org.example.StatusOfOrder.DELIVERY;
 import static org.example.StatusOfOrder.PAID;
 
 public class Orders {
@@ -46,7 +45,7 @@ public class Orders {
                 try {
                     productId = Integer.parseInt(parts[0]);
                     productCount = Integer.parseInt(parts[1]);
-                } catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("Внимание! Введите два числа, через пробел");
                     continue;
                 }
@@ -82,7 +81,7 @@ public class Orders {
                         }
                     }
                 }
-                } else {
+            } else {
                 Orders.PrintOrder(order.orderId);
                 break;
             }
@@ -174,15 +173,14 @@ public class Orders {
 
 
     public static void RemoveOrder(int orderId) {
-      Orders order = Orders.FindOrder(orderId);
-      int index = ordersArrayList.indexOf(order);
-       ordersArrayList.remove(index);
+        Orders order = Orders.FindOrder(orderId);
+        ordersArrayList.remove(order);
     }
 
     public static void PrintClientOrders(int clientId) {
         System.out.println("ВОТ ВАШИ ЗАКАЗЫ " + Clients.GetClient(clientId).getName() + " !");
         for (Orders order : ordersArrayList) {
-            if (order.clientId == clientId){
+            if (order.clientId == clientId) {
                 Orders.PrintOrder(order.orderId);
             }
         }

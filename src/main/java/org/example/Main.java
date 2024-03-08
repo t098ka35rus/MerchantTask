@@ -4,6 +4,7 @@ package org.example;
 import java.util.Scanner;
 
 public class Main {
+    static Scanner scanner = new Scanner(System.in);
     private static int clientId;
 
     public static void main(String[] args) {
@@ -44,7 +45,7 @@ public class Main {
     }
 
     public static void CommonActions() {
-        Scanner scanner = new Scanner(System.in);
+
         while (true) {
             System.out.println("Выберите операцию");
             System.out.println("1 - Вывод доступных для покупки товаров");
@@ -112,6 +113,7 @@ public class Main {
                     break;
                 }
                 case 8: {
+                    /*
                     Orders.PrintClientOrders(Main.clientId);
                     System.out.print("Чтобы посмотреть статус, введите номер заказа (end - выход): ");
                     String input = scanner.nextLine();
@@ -121,11 +123,32 @@ public class Main {
                     int orderId = Integer.parseInt(input);
                     Orders.ProcessingOrder(orderId);
                     break;
-                }
+                */
+                    String input = InputHolder("Чтобы посмотреть статус, введите номер заказа (end - выход): ");
 
+                    if (input.equals("end")) {
+                        break;
+                    }
+                    System.out.println("!!! " + input);
+                    int orderId = Integer.parseInt(input);
+                    Orders.ProcessingOrder(orderId);
+                    break;
+
+                }
             }
+
         }
     }
 
-    public static void Prompt (){}
+
+    public static String InputHolder(String prompt) {
+        Orders.PrintClientOrders(Main.clientId);
+        System.out.print(prompt);
+        if (scanner.hasNext("^\\d+$")) {
+            String s = scanner.nextLine();
+            System.out.println("!!! " + s);
+            return s;
+        }
+        return "end";
+    }
 }

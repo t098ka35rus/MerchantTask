@@ -17,17 +17,7 @@ public class Goods {
     private String goodsName;
     private String vendor;
     private boolean forsale;
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
-
     private int discount;
-
 
     private Goods() {
     }
@@ -88,7 +78,7 @@ public class Goods {
     }
 
     public static void GetGoodsByVendor(@NotNull String vendor) {
-      String lv =vendor.toLowerCase(Locale.ROOT);
+        String lv = vendor.toLowerCase(Locale.ROOT);
         if (vendor.isEmpty()) {
             System.out.println("keyword is empty");
         } else {
@@ -160,26 +150,34 @@ public class Goods {
         return 7777777;
     }
 
-    public static void SetDiscount(int goodsId, int discount){
+    public static void SetDiscount(int goodsId, int discount) {
         for (Goods goods : goodsArrayList) {
-            if (goods.goodsId == goodsId){
+            if (goods.goodsId == goodsId) {
                 goods.setDiscount(discount);
             }
         }
     }
-    public static void ListDiscount(){
+
+    public static void ListDiscount() {
         System.out.println("КУПИТЕ ТОВАРЫ СО СКИДКОЙ!");
         for (Goods goods : goodsArrayList) {
-            if (goods.discount > 0){
+            if (goods.discount > 0) {
                 System.out.println("Id = " + goods.goodsId
                         + "; Name = " + goods.goodsName
-                        +"; Price = " + goods.goodsPrice
+                        + "; Price = " + goods.goodsPrice
                         + "; Vendor =  " + goods.vendor
                         + "; Discount = " + goods.discount);
             }
         }
     }
 
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
 
     public String getVendor() {
         return vendor;
