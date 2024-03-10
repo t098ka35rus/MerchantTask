@@ -1,14 +1,11 @@
 package org.example;
 
-
-import java.util.Scanner;
-
 public class Main {
-    static Scanner scanner = new Scanner(System.in);
     private static int clientId;
+    private static int end = 777;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         String inputstring;
         System.out.println("Поехали!");
         System.out.println("Добавляем товары");
@@ -24,19 +21,22 @@ public class Main {
         Goods.SetDiscount(1, 20);
         System.out.println("Работаем с клиентом");
         while (true) {
+            System.out.println();
             System.out.print("Введите ваше имя (либо exit для выхода): ");
-            inputstring = scanner.nextLine();
+            inputstring = InputHolder.GetString();
             if (inputstring.equals("exit")) {
                 break;
             }
             if (Clients.isNewClient(inputstring)) {
                 Clients.AddClient(inputstring);
-                System.out.println("Вы наш новый клиент. Ваш Id = " + clientId);
+                System.out.println("Вы наш новый клиент. Ваш Id = " + Clients.FindClient(inputstring).getClientId() + "!");
+                clientId = Clients.FindClient(inputstring).getClientId();
                 Goods.ListDiscount();
                 CommonActions();
 
             } else {
                 System.out.println("Добрый день Дружище " + Clients.FindClient(inputstring).getName() + "!");
+                clientId = Clients.FindClient(inputstring).getClientId();
                 Goods.ListDiscount();
                 CommonActions();
             }
@@ -57,98 +57,70 @@ public class Main {
             System.out.println("7 - Отменить заказ");
             System.out.println("8 - Статус заказа");
             System.out.println("Выход - end");
-
-            String inputstring = scanner.nextLine();
-            if (inputstring.equals("end")) {
+            System.out.print("ВАШ ВЫБОР? (end - выход): ");
+            int choice = InputHolder.GetInt();
+            if (choice == end) {
+               InputHolder.SkipSc();
                 break;
             }
-            int choice = Integer.parseInt(inputstring);
             switch (choice) {
                 case 1:
                     Goods.PrintForSaleGoods();
                     break;
                 case 2: {
                     System.out.print("Введите название товара: ");
-                    String name = scanner.nextLine();
+                    String name = InputHolder.GetString();
                     Goods.GetGoodsByName(name);
                     break;
                 }
                 case 3: {
-                    System.out.println("Введите цену товара");
-                    int price = Integer.parseInt(scanner.nextLine());
-                    Goods.GetGoodsByPrice(price);
-                    break;
+                    int price = 0;
+                     System.out.println("Введите цену товара");
+                     price = InputHolder.GetInt();
+                     if(price == end){
+                         break;
+                     }
+                     Goods.GetGoodsByPrice(price);
+                     break;
                 }
                 case 4: {
                     System.out.println("Введите название вендора");
-                    String vendor = scanner.nextLine();
+                    String vendor = InputHolder.GetString();
                     Goods.GetGoodsByVendor(vendor);
                     break;
                 }
                 case 5: {
-                    Orders.AddOrder(Main.clientId);
+                    Orders.AddOrder(clientId);
                     break;
                 }
                 case 6: {
-                    Orders.PrintClientOrders(Main.clientId);
-                    System.out.print("Чтобы повторить, введите номер заказа (end - выход): ");
-                    String input = scanner.nextLine();
-                    if (input.equals("end")) {
-                        break;
-                    }
-                    int orderId = Integer.parseInt(input);
+                    int orderId = InputHolder.GetIntWithPrompt("Чтобы повторить, введите номер заказа (end - выход):", clientId);
+                    if (orderId == end) break;
                     Orders.RepeatOrder(orderId);
-                    Orders.PrintClientOrders(Main.clientId);
+                    Orders.PrintClientOrders(clientId);
                     break;
                 }
                 case 7: {
-                    Orders.PrintClientOrders(Main.clientId);
-                    System.out.print("Чтобы отменить, введите номер заказа (end - выход): ");
-                    int orderId = Integer.parseInt(scanner.nextLine());
-                    if (scanner.nextLine().equals("end")) {
-                        break;
-                    }
+                    int orderId = InputHolder.GetIntWithPrompt("Чтобы отменить, введите номер заказа (end - выход): ", clientId);
+                    if (orderId == end) break;
                     Orders.RemoveOrder(orderId);
-                    Orders.PrintClientOrders(Main.clientId);
+                    Orders.PrintClientOrders(clientId);
                     break;
                 }
                 case 8: {
-                    /*
-                    Orders.PrintClientOrders(Main.clientId);
-                    System.out.print("Чтобы посмотреть статус, введите номер заказа (end - выход): ");
-                    String input = scanner.nextLine();
-                    if (input.equals("end")) {
-                        break;
-                    }
-                    int orderId = Integer.parseInt(input);
-                    Orders.ProcessingOrder(orderId);
-                    break;
-                */
-                    String input = InputHolder("Чтобы посмотреть статус, введите номер заказа (end - выход): ");
-
-                    if (input.equals("end")) {
-                        break;
-                    }
-                    System.out.println("!!! " + input);
-                    int orderId = Integer.parseInt(input);
+                    int orderId = InputHolder.GetIntWithPrompt("Чтобы посмотреть, введите номер заказа (end - выход): ", clientId);
+                    if (orderId == end) break;
                     Orders.ProcessingOrder(orderId);
                     break;
 
                 }
+
+
+
             }
 
         }
     }
 
 
-    public static String InputHolder(String prompt) {
-        Orders.PrintClientOrders(Main.clientId);
-        System.out.print(prompt);
-        if (scanner.hasNext("^\\d+$")) {
-            String s = scanner.nextLine();
-            System.out.println("!!! " + s);
-            return s;
-        }
-        return "end";
-    }
 }

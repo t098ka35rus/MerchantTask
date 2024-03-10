@@ -67,7 +67,7 @@ public class Clients implements Dealable {
     }
 
     @Override
-    public void makeDeal() {
+    public void makeDeal() {     // Принцип замены Барбары Лисков. Наследник может играть за предка.
         Orders.AddOrder(clientId);
 
     }

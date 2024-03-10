@@ -9,10 +9,10 @@ import java.util.Scanner;
 import static org.example.Goods.getGoodsPrice;
 import static org.example.StatusOfOrder.PAID;
 
-public class Orders {
+public class Orders { //Single-responsibility principle. public методы, все остальное внутри класса `Orders
     private static final ArrayList<Orders> ordersArrayList = new ArrayList<>();
     private static final int productParams = 2;
-    private static final int goodsIdPosition = 0;
+    private static final int goodsIdPosition = 0; // Magics, вместо числа, переменная для номера элемента в массиве
     private static final int goodsQuantPosition = 1;
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -71,7 +71,7 @@ public class Orders {
                 if (Orders.FindProductInOrder(order.orderId, productId)) {
                     for (int j = 0; j < order.goodsOfOrder.size(); j++) {
                         int[] prod = order.goodsOfOrder.get(j);
-                        int id = prod[goodsIdPosition];
+                        int id = prod[goodsIdPosition]; //     Magics вместо числа - переменная.
                         int quant = prod[goodsQuantPosition];
                         if (id == productId) {
                             prod[goodsQuantPosition] = quant + productCount;

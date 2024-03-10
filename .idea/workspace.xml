@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a29b7d0-be27-405c-8d21-5b99d4f655a7" name="Changes" comment="commit 12">
+    <list default="true" id="0a29b7d0-be27-405c-8d21-5b99d4f655a7" name="Changes" comment="commit 13">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Clients.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Clients.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Goods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Goods.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Orders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Orders.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/StatusOfOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/StatusOfOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Goods.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Goods.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Orders.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Orders.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +20,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -71,14 +67,15 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.InputHolder.executor": "Run",
     "Application.Main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "kotlin-language-version-configured": "true",
-    "last.edited.regexp": "0\n"
+    "last.edited.regexp": "1"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -100,6 +97,20 @@
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
       <option name="PROGRAM_PARAMETERS" />
       <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InputHolder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.InputHolder" />
+      <module name="MerchantTask" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -143,6 +154,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.InputHolder" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -346,7 +358,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709698202984</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="commit 13">
+      <option name="closed" value="true" />
+      <created>1709893696724</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1709893696725</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -391,9 +411,18 @@
     <MESSAGE value="commit 10" />
     <MESSAGE value="commit 11" />
     <MESSAGE value="commit 12" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit 12" />
+    <MESSAGE value="commit 13" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit 13" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.util.InputMismatchException" package="java.util" />
+          <option name="timeStamp" value="9" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="0" language="JAVA" />
